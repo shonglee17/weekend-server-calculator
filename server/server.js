@@ -11,7 +11,7 @@ function solvingEquation(){
     return submittedEquations.finalResult
 }
 
-app.post('/incomingServerInputs', (req, res) => {
+app.post('/outgoingServerInputs', (req, res) => {
     
     submittedEquations.push(req.body);
     res.sendStatus(201); //tells client the array was created
