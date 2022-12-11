@@ -8,13 +8,16 @@ let values = {
 }
 function onReady(){
     $('#equalButton').on('click', submittedInputs)
-    $(`#clearButton`).on('click', clearHistory)
+    $('#clearButton').on('click', clearHistory)
     $('#addButton').on('click', addOperator)
     $('#subtractButton').on('click', subtractOperator)
     $('#multiplyButton').on('click', multiplyOperator)
     $('#divideButton').on('click', divideOperator)
 }
-
+function clearHistory(){
+  $('#firstInput').val('')
+  $('#secondInput').val('')
+}
 function submittedInputs(){
     let firstInput = $('#firstInput').val()
     let secondInput = $('#secondInput').val()
@@ -32,6 +35,7 @@ function submittedInputs(){
     console.log(values);
     outgoingServerInputs(values)
     renderResults()
+    updateResults()
 }
 
 function outgoingServerInputs(values){
@@ -73,4 +77,13 @@ function multiplyOperator(){
 
 function divideOperator(){
   values.calcOperator = '/'
+}
+
+function updateResults(){
+  $.ajax({
+    url: '/updateResults',
+    method: 'get',
+  }).then((res) => {
+   $('#resultsText').text(res[res.length-1].finalResult)
+  })
 }

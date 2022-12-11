@@ -7,17 +7,18 @@ app.use(bodyParser.urlencoded({extended:true}))
 let submittedEquations = []
 // let finalResult = []
 
- 
+app.get('/updateResults', (req, res) => {
+    
+    res.send(submittedEquations); //tells client the array was created
+  })
     
 
 
 
 app.post('/outgoingServerInputs', (req, res) => {
     let values = req.body
-    console.log(values.calcOperator);
     if(values.calcOperator === '+'){
        values.finalResult = Number(values.firstVal) + Number(values.secondVal) 
-        console.log(values.finalResult);
     }
     else if(values.calcOperator === '-') {
         values.finalResult = Number(values.firstVal) - Number(values.secondVal)
@@ -30,7 +31,6 @@ app.post('/outgoingServerInputs', (req, res) => {
     }
 
     submittedEquations.push(values);
-    console.log(submittedEquations);
     res.sendStatus(201); //tells client the array was created
     
 })
